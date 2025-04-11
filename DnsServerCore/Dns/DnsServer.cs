@@ -4457,34 +4457,6 @@ namespace DnsServerCore.Dns
             return false;
         }
 
-        private void QpmLimitSamplingTimerCallback(object state)
-        {
-            try
-            {
-                _stats.GetLatestClientSubnetStats(_qpmLimitSampleMinutes, _qpmLimitIPv4PrefixLength, _qpmLimitIPv6PrefixLength, out IReadOnlyDictionary<IPAddress, long> qpmLimitClientSubnetStats, out IReadOnlyDictionary<IPAddress, long> qpmLimitErrorClientSubnetStats);
-
-                if (_qpmLimitErrors > 0)
-                    WriteClientSubnetRateLimitLog(_qpmLimitErrorClientSubnetStats, qpmLimitErrorClientSubnetStats, _qpmLimitErrors, "errors");
-
-                if (_qpmLimitRequests > 0)
-                    WriteClientSubnetRateLimitLog(_qpmLimitClientSubnetStats, qpmLimitClientSubnetStats, _qpmLimitRequests, "requests");
-
-                _qpmLimitClientSubnetStats = qpmLimitClientSubnetStats;
-                _qpmLimitErrorClientSubnetStats = qpmLimitErrorClientSubnetStats;
-            }
-            catch (Exception ex)
-            {
-                _log?.Write(ex);
-            }
-            finally
-            {
-                lock (_qpmLimitSamplingTimerLock)
-                {
-                    _qpmLimitSamplingTimer?.Change(QPM_LIMIT_SAMPLING_TIMER_INTERVAL, Timeout.Infinite);
-                }
-            }
-        }
-
         private void WriteClientSubnetRateLimitLog(IReadOnlyDictionary<IPAddress, long> oldQpmLimitClientSubnetStats, IReadOnlyDictionary<IPAddress, long> newQpmLimitClientSubnetStats, long qpmLimit, string limitType)
         {
             if (oldQpmLimitClientSubnetStats is not null)
@@ -5060,8 +5032,7 @@ namespace DnsServerCore.Dns
             _cachePrefetchSamplingTimer = new Timer(CachePrefetchSamplingTimerCallback, null, Timeout.Infinite, Timeout.Infinite);
             _cachePrefetchRefreshTimer = new Timer(CachePrefetchRefreshTimerCallback, null, Timeout.Infinite, Timeout.Infinite);
             _cacheMaintenanceTimer = new Timer(CacheMaintenanceTimerCallback, null, CACHE_MAINTENANCE_TIMER_INITIAL_INTEVAL, Timeout.Infinite);
-            _qpmLimitSamplingTimer = new Timer(QpmLimitSamplingTimerCallback, null, Timeout.Infinite, Timeout.Infinite);
-
+            
             _state = ServiceState.Running;
 
             UpdateThisServer();

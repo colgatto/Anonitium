@@ -17,60 +17,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 */
 
-function flushDnsCache(objBtn) {
-    if (!confirm("Are you sure to flush the DNS Server cache?"))
-        return;
-
-    var btn = $(objBtn);
-    btn.button('loading');
-
-    HTTPRequest({
-        url: "api/cache/flush?token=" + sessionData.token,
-        success: function (responseJSON) {
-            $("#lstCachedZones").html("<div class=\"zone\"><a href=\"#\" onclick=\"refreshCachedZonesList(); return false;\"><b>[refresh]</b></a></div>");
-            $("#txtCachedZoneViewerTitle").text("<ROOT>");
-            $("#btnDeleteCachedZone").hide();
-            $("#preCachedZoneViewerBody").hide();
-
-            btn.button('reset');
-            showAlert("success", "Flushed!", "DNS Server cache was flushed successfully.");
-        },
-        error: function () {
-            btn.button('reset');
-        },
-        invalidToken: function () {
-            btn.button('reset');
-            showPageLogin();
-        }
-    });
-}
-
-function deleteCachedZone() {
-    var domain = $("#txtCachedZoneViewerTitle").text();
-
-    if (!confirm("Are you sure you want to delete the cached zone '" + domain + "' and all its records?"))
-        return;
-
-    var btn = $("#btnDeleteCachedZone").button('loading');
-
-    HTTPRequest({
-        url: "api/cache/delete?token=" + sessionData.token + "&domain=" + domain,
-        success: function (responseJSON) {
-            refreshCachedZonesList(getParentDomain(domain), "up");
-
-            btn.button('reset');
-            showAlert("success", "Deleted!", "Cached zone '" + domain + "' was deleted successfully.");
-        },
-        error: function () {
-            btn.button('reset');
-        },
-        invalidToken: function () {
-            btn.button('reset');
-            showPageLogin();
-        }
-    });
-}
-
 function getParentDomain(domain) {
 
     if ((domain != null) && (domain != "")) {
@@ -86,70 +32,6 @@ function getParentDomain(domain) {
     }
 
     return null;
-}
-
-function refreshCachedZonesList(domain, direction) {
-    if (domain == null)
-        domain = "";
-
-    domain.toLowerCase();
-
-    var lstCachedZones = $("#lstCachedZones");
-    var divCachedZoneViewer = $("#divCachedZoneViewer");
-    var preCachedZoneViewerBody = $("#preCachedZoneViewerBody");
-
-    divCachedZoneViewer.hide();
-    preCachedZoneViewerBody.hide();
-
-    HTTPRequest({
-        url: "api/cache/list?token=" + sessionData.token + "&domain=" + domain + ((direction == null) ? "" : "&direction=" + direction),
-        success: function (responseJSON) {
-            var newDomain = responseJSON.response.domain;
-            var zones = responseJSON.response.zones;
-
-            var list = "<div class=\"zone\"><a href=\"#\" onclick=\"refreshCachedZonesList('" + newDomain + "'); return false;\"><b>[refresh]</b></a></div>";
-
-            var parentDomain = getParentDomain(newDomain);
-
-            if (parentDomain != null)
-                list += "<div class=\"zone\"><a href=\"#\" onclick=\"refreshCachedZonesList('" + parentDomain + "', 'up'); return false;\"><b>[up]</b></a></div>";
-
-            for (var i = 0; i < zones.length; i++) {
-                var zoneName = htmlEncode(zones[i]);
-
-                list += "<div class=\"zone\"><a href=\"#\" onclick=\"refreshCachedZonesList('" + zoneName + "'); return false;\">" + zoneName + "</a></div>";
-            }
-
-            lstCachedZones.html(list);
-
-            if (newDomain == "") {
-                $("#txtCachedZoneViewerTitle").text("<ROOT>");
-                $("#btnDeleteCachedZone").hide();
-            }
-            else {
-                if (responseJSON.response.domainIdn == null)
-                    $("#txtCachedZoneViewerTitle").text(newDomain);
-                else
-                    $("#txtCachedZoneViewerTitle").text(responseJSON.response.domainIdn);
-
-                $("#btnDeleteCachedZone").show();
-            }
-
-            if (responseJSON.response.records.length > 0) {
-                preCachedZoneViewerBody.text(JSON.stringify(responseJSON.response.records, null, 2));
-                preCachedZoneViewerBody.show();
-            }
-
-            divCachedZoneViewer.show();
-        },
-        invalidToken: function () {
-            showPageLogin();
-        },
-        error: function () {
-            lstCachedZones.html("<div class=\"zone\"><a href=\"#\" onclick=\"refreshCachedZonesList('" + domain + "'); return false;\"><b>[refresh]</b></a></div>");
-        },
-        objLoaderPlaceholder: lstCachedZones
-    });
 }
 
 function allowZone() {

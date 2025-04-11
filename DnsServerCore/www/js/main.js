@@ -94,10 +94,6 @@ function showPageMain() {
             $("#mainPanelTabPaneZones").addClass("active");
             refreshZones(true);
         }
-        else if (sessionData.info.permissions.Cache.canView) {
-            $("#mainPanelTabListCachedZones").addClass("active");
-            $("#mainPanelTabPaneCachedZones").addClass("active");
-        }
         else if (sessionData.info.permissions.Allowed.canView) {
             $("#mainPanelTabListAllowedZones").addClass("active");
             $("#mainPanelTabPaneAllowedZones").addClass("active");
@@ -146,14 +142,6 @@ function showPageMain() {
     }
     else {
         $("#mainPanelTabListZones").hide();
-    }
-
-    if (sessionData.info.permissions.Cache.canView) {
-        $("#mainPanelTabListCachedZones").show();
-        refreshCachedZonesList();
-    }
-    else {
-        $("#mainPanelTabListCachedZones").hide();
     }
 
     if (sessionData.info.permissions.Allowed.canView) {
@@ -230,8 +218,8 @@ function showPageMain() {
 $(function () {
     var headerHtml = $("#header").html();
 
-    $("#header").html("<div class=\"title\"><a href=\".\"><img src=\"img/logo25x25.png\" alt=\"Technitium Logo\" /><span class=\"text\" style=\"color: #ffffff;\">Technitium</span></a>" + headerHtml + "</div>");
-    $("#footer").html("<div class=\"content\"><a href=\"https://technitium.com/\" target=\"_blank\">Technitium</a> | <a href=\"https://blog.technitium.com/\" target=\"_blank\">Blog</a> | <a href=\"https://go.technitium.com/?id=35\" target=\"_blank\">Donate</a> | <a href=\"https://dnsclient.net/\" target=\"_blank\">DNS Client</a> | <a href=\"https://github.com/TechnitiumSoftware/DnsServer\" target=\"_blank\"><i class=\"fa fa-github\"></i>&nbsp;GitHub</a> | <a href=\"#\" onclick=\"showAbout(); return false;\">About</a></div>");
+    $("#header").html("<div class=\"title\"><a href=\".\"><img src=\"img/logo25x25.png\" alt=\"Technitium Logo\" /><span class=\"text\" style=\"color: #ffffff;\">Anonitium</span></a>" + headerHtml + "</div>");
+    $("#footer").html("<div class=\"content\"><a href=\"https://github.com/colgatto/anonitium\" target=\"_blank\"><i class=\"fa fa-github\"></i>&nbsp;Anonitium</a> | Based on: <a href=\"https://technitium.com/\" target=\"_blank\">Technitium</a> | <a href=\"https://blog.technitium.com/\" target=\"_blank\">Blog</a> | <a href=\"https://go.technitium.com/?id=35\" target=\"_blank\">Donate</a> | <a href=\"https://dnsclient.net/\" target=\"_blank\">DNS Client</a> | <a href=\"https://github.com/TechnitiumSoftware/DnsServer\" target=\"_blank\"><i class=\"fa fa-github\"></i>&nbsp;GitHub</a> | <a href=\"#\" onclick=\"showAbout(); return false;\">About</a></div>");
 
     //dropdown list box support
     $('.dropdown').on('click', 'a', function (e) {
@@ -842,9 +830,6 @@ function showAbout() {
         $("#mainPanelTabListZones").removeClass("active");
         $("#mainPanelTabPaneZones").removeClass("active");
 
-        $("#mainPanelTabListCachedZones").removeClass("active");
-        $("#mainPanelTabPaneCachedZones").removeClass("active");
-
         $("#mainPanelTabListAllowedZones").removeClass("active");
         $("#mainPanelTabPaneAllowedZones").removeClass("active");
 
@@ -1164,7 +1149,6 @@ function loadDnsSettings(responseJSON) {
     $("#txtResolverMaxStackCount").val(responseJSON.response.resolverMaxStackCount);
 
     //cache
-    $("#chkSaveCache").prop("checked", responseJSON.response.saveCache);
 
     $("#chkServeStale").prop("checked", responseJSON.response.serveStale);
     $("#txtServeStaleTtl").prop("disabled", !responseJSON.response.serveStale);
@@ -1671,7 +1655,6 @@ function saveDnsSettings() {
     }
 
     //cache
-    var saveCache = $("#chkSaveCache").prop("checked");
 
     var serveStale = $("#chkServeStale").prop("checked");
     var serveStaleTtl = $("#txtServeStaleTtl").val();
@@ -1862,7 +1845,7 @@ function saveDnsSettings() {
             + "&enableDnsOverUdpProxy=" + enableDnsOverUdpProxy + "&enableDnsOverTcpProxy=" + enableDnsOverTcpProxy + "&enableDnsOverHttp=" + enableDnsOverHttp + "&enableDnsOverTls=" + enableDnsOverTls + "&enableDnsOverHttps=" + enableDnsOverHttps + "&enableDnsOverHttp3=" + enableDnsOverHttp3 + "&enableDnsOverQuic=" + enableDnsOverQuic + "&dnsOverUdpProxyPort=" + dnsOverUdpProxyPort + "&dnsOverTcpProxyPort=" + dnsOverTcpProxyPort + "&dnsOverHttpPort=" + dnsOverHttpPort + "&dnsOverTlsPort=" + dnsOverTlsPort + "&dnsOverHttpsPort=" + dnsOverHttpsPort + "&dnsOverQuicPort=" + dnsOverQuicPort + "&reverseProxyNetworkACL=" + encodeURIComponent(reverseProxyNetworkACL) + "&dnsTlsCertificatePath=" + encodeURIComponent(dnsTlsCertificatePath) + "&dnsTlsCertificatePassword=" + encodeURIComponent(dnsTlsCertificatePassword) + "&dnsOverHttpRealIpHeader=" + encodeURIComponent(dnsOverHttpRealIpHeader)
             + "&tsigKeys=" + encodeURIComponent(tsigKeys)
             + "&recursion=" + recursion + "&recursionNetworkACL=" + encodeURIComponent(recursionNetworkACL) + "&randomizeName=" + randomizeName + "&qnameMinimization=" + qnameMinimization + "&resolverRetries=" + resolverRetries + "&resolverTimeout=" + resolverTimeout + "&resolverConcurrency=" + resolverConcurrency + "&resolverMaxStackCount=" + resolverMaxStackCount
-            + "&saveCache=" + saveCache + "&serveStale=" + serveStale + "&serveStaleTtl=" + serveStaleTtl + "&serveStaleAnswerTtl=" + serveStaleAnswerTtl + "&serveStaleResetTtl=" + serveStaleResetTtl + "&serveStaleMaxWaitTime=" + serveStaleMaxWaitTime + "&cacheMaximumEntries=" + cacheMaximumEntries + "&cacheMinimumRecordTtl=" + cacheMinimumRecordTtl + "&cacheMaximumRecordTtl=" + cacheMaximumRecordTtl + "&cacheNegativeRecordTtl=" + cacheNegativeRecordTtl + "&cacheFailureRecordTtl=" + cacheFailureRecordTtl + "&cachePrefetchEligibility=" + cachePrefetchEligibility + "&cachePrefetchTrigger=" + cachePrefetchTrigger + "&cachePrefetchSampleIntervalInMinutes=" + cachePrefetchSampleIntervalInMinutes + "&cachePrefetchSampleEligibilityHitsPerHour=" + cachePrefetchSampleEligibilityHitsPerHour
+            + "&serveStale=" + serveStale + "&serveStaleTtl=" + serveStaleTtl + "&serveStaleAnswerTtl=" + serveStaleAnswerTtl + "&serveStaleResetTtl=" + serveStaleResetTtl + "&serveStaleMaxWaitTime=" + serveStaleMaxWaitTime + "&cacheMaximumEntries=" + cacheMaximumEntries + "&cacheMinimumRecordTtl=" + cacheMinimumRecordTtl + "&cacheMaximumRecordTtl=" + cacheMaximumRecordTtl + "&cacheNegativeRecordTtl=" + cacheNegativeRecordTtl + "&cacheFailureRecordTtl=" + cacheFailureRecordTtl + "&cachePrefetchEligibility=" + cachePrefetchEligibility + "&cachePrefetchTrigger=" + cachePrefetchTrigger + "&cachePrefetchSampleIntervalInMinutes=" + cachePrefetchSampleIntervalInMinutes + "&cachePrefetchSampleEligibilityHitsPerHour=" + cachePrefetchSampleEligibilityHitsPerHour
             + "&enableBlocking=" + enableBlocking + "&allowTxtBlockingReport=" + allowTxtBlockingReport + "&blockingBypassList=" + encodeURIComponent(blockingBypassList) + "&blockingType=" + blockingType + "&customBlockingAddresses=" + encodeURIComponent(customBlockingAddresses) + "&blockingAnswerTtl=" + blockingAnswerTtl + "&blockListUrls=" + encodeURIComponent(blockListUrls) + "&blockListUpdateIntervalHours=" + blockListUpdateIntervalHours
             + proxy + "&forwarders=" + encodeURIComponent(forwarders) + "&forwarderProtocol=" + forwarderProtocol + "&concurrentForwarding=" + concurrentForwarding + "&forwarderRetries=" + forwarderRetries + "&forwarderTimeout=" + forwarderTimeout + "&forwarderConcurrency=" + forwarderConcurrency
             + "&loggingType=" + loggingType + "&ignoreResolverLogs=" + ignoreResolverLogs + "&logQueries=" + logQueries + "&useLocalTime=" + useLocalTime + "&logFolder=" + encodeURIComponent(logFolder) + "&maxLogFileDays=" + maxLogFileDays + "&enableInMemoryStats=" + enableInMemoryStats + "&maxStatFileDays=" + maxStatFileDays,
@@ -2055,80 +2038,6 @@ function updateBlockingState() {
 function updateChart(chart, data) {
     chart.data = data;
     chart.update();
-    loadChartLegendSettings(chart); //Reload the chart legend
-}
-
-function loadChartLegendSettings(chart) {
-    var labelFilters = localStorage.getItem("chart_" + chart.id + "_legend");
-
-    if (labelFilters != null) {
-        labelFilters = JSON.parse(labelFilters);
-        if (chart.config.type == "doughnut" || chart.config.type == "pie") {
-            chart.data.labels.forEach((label, index) => {
-                let labelFilter = labelFilters.filter(function (f) {
-                    return f.title == this.toString();
-                }, label);
-                if (labelFilter.length > 0) {
-                    chart.getDatasetMeta(0).data[index].hidden = labelFilter[0].hidden;
-                }
-            });
-        }
-        else {
-            chart.data.datasets.forEach((data, index) => {
-                let labelFilter = labelFilters.filter(function (f) {
-                    return f.title == this.toString();
-                }, data.label);
-                if (labelFilter.length > 0) {
-                    chart.getDatasetMeta(index).hidden = labelFilter[0].hidden;
-                }
-            });
-        }
-
-        chart.update();
-    }
-}
-
-function saveChartLegendSettings(chart) {
-    var labelFilters = [];
-
-    if (chart.config.type == "doughnut" || chart.config.type == "pie") {
-        chart.data.labels.forEach((label, index) => {
-            var hidden = chart.getDatasetMeta(0).data[index].hidden;
-            labelFilters.push(
-                {
-                    title: label,
-                    hidden: hidden
-                }
-            );
-        });
-    }
-    else {
-        chart.data.datasets.forEach((data, index) => {
-            var hidden = chart.getDatasetMeta(index).hidden;
-            labelFilters.push(
-                {
-                    title: data.label,
-                    hidden: hidden
-                }
-            );
-        });
-    }
-
-    localStorage.setItem("chart_" + chart.id + "_legend", JSON.stringify(labelFilters));
-}
-
-var chartLegendOnClick = function (e, legendItem) {
-    var chartType = this.chart.config.type;
-
-    if (chartType == "doughnut") {
-        Chart.defaults.doughnut.legend.onClick.call(this, e, legendItem);
-    } else if (chartType == "pie") {
-        Chart.defaults.pie.legend.onClick.call(this, e, legendItem);
-    } else {
-        Chart.defaults.global.legend.onClick.call(this, e, legendItem);
-    }
-
-    saveChartLegendSettings(this.chart);
 }
 
 function refreshDashboard(hideLoader) {
@@ -2196,8 +2105,6 @@ function refreshDashboard(hideLoader) {
             $("#divDashboardStatsTotalBlocked").text(responseJSON.response.stats.totalBlocked.toLocaleString());
             $("#divDashboardStatsTotalDropped").text(responseJSON.response.stats.totalDropped.toLocaleString());
 
-            $("#divDashboardStatsTotalClients").text(responseJSON.response.stats.totalClients.toLocaleString());
-
             $("#divDashboardStatsZones").text(responseJSON.response.stats.zones.toLocaleString());
             $("#divDashboardStatsCachedEntries").text(responseJSON.response.stats.cachedEntries.toLocaleString());
             $("#divDashboardStatsAllowedZones").text(responseJSON.response.stats.allowedZones.toLocaleString());
@@ -2256,25 +2163,22 @@ function refreshDashboard(hideLoader) {
                     type: 'line',
                     data: responseJSON.response.mainChartData,
                     options: {
+						responsive: true,
                         elements: {
                             line: {
                                 tension: 0.2,
                             }
                         },
                         scales: {
-                            yAxes: [{
-                                ticks: {
-                                    beginAtZero: true
-                                }
-                            }]
-                        },
-                        legend: {
-                            onClick: chartLegendOnClick
+                            y: {
+								ticks: {
+									stepSize: 10
+								},
+								beginAtZero: true
+                            }
                         }
                     }
                 });
-
-                loadChartLegendSettings(window.chartDashboardMain);
             }
             else {
                 updateChart(window.chartDashboardMain, responseJSON.response.mainChartData);
@@ -2284,17 +2188,21 @@ function refreshDashboard(hideLoader) {
             if (window.chartDashboardPie == null) {
                 var contextDashboardPie = document.getElementById("canvasDashboardPie").getContext('2d');
 
+				responseJSON.response.queryResponseChartData.datasets[0].axis = 'y';
                 window.chartDashboardPie = new Chart(contextDashboardPie, {
-                    type: 'doughnut',
+                    type: 'bar',
                     data: responseJSON.response.queryResponseChartData,
                     options: {
-                        legend: {
-                            onClick: chartLegendOnClick
-                        }
+						responsive: true,
+						maintainAspectRatio: false,
+						indexAxis: 'y',
+						plugins: {
+							legend: {
+								display: false
+							}
+						}
                     }
                 });
-
-                loadChartLegendSettings(window.chartDashboardPie);
             }
             else {
                 updateChart(window.chartDashboardPie, responseJSON.response.queryResponseChartData);
@@ -2308,13 +2216,10 @@ function refreshDashboard(hideLoader) {
                     type: 'doughnut',
                     data: responseJSON.response.queryTypeChartData,
                     options: {
-                        legend: {
-                            onClick: chartLegendOnClick
-                        }
+						responsive: true,
+						maintainAspectRatio: false,
                     }
                 });
-
-                loadChartLegendSettings(window.chartDashboardPie2);
             }
             else {
                 updateChart(window.chartDashboardPie2, responseJSON.response.queryTypeChartData);
@@ -2328,94 +2233,13 @@ function refreshDashboard(hideLoader) {
                     type: 'doughnut',
                     data: responseJSON.response.protocolTypeChartData,
                     options: {
-                        legend: {
-                            onClick: chartLegendOnClick
-                        }
+						responsive: true,
+						maintainAspectRatio: false,
                     }
                 });
-
-                loadChartLegendSettings(window.chartDashboardPie3);
             }
             else {
                 updateChart(window.chartDashboardPie3, responseJSON.response.protocolTypeChartData);
-            }
-
-            //top clients
-            {
-                var tableHtmlRows;
-                var topClients = responseJSON.response.topClients;
-
-                if (topClients.length < 1) {
-                    tableHtmlRows = "<tr><td colspan=\"3\" align=\"center\">No Data</td></tr>";
-                }
-                else {
-                    tableHtmlRows = "";
-
-                    for (var i = 0; i < topClients.length; i++) {
-                        tableHtmlRows += "<tr" + (topClients[i].rateLimited ? " style=\"color: orange;\"" : "") + "><td style=\"word-wrap: anywhere;\">" + htmlEncode(topClients[i].name) + (topClients[i].rateLimited ? " (rate limited)" : "") + "<br />" + htmlEncode(topClients[i].domain == "" ? "." : topClients[i].domain) + "</td><td>" + topClients[i].hits.toLocaleString();
-                        tableHtmlRows += "</td><td align=\"right\"><div class=\"dropdown\"><a href=\"#\" id=\"btnDashboardTopClientsRowOption" + i + "\" class=\"dropdown-toggle\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"true\"><span class=\"glyphicon glyphicon-option-vertical\" aria-hidden=\"true\"></span></a><ul class=\"dropdown-menu dropdown-menu-right\">";
-                        tableHtmlRows += "<li><a href=\"#\" data-id=\"" + i + "\" onclick=\"showQueryLogs(null, '" + topClients[i].name + "'); return false;\">Show Query Logs</a></li>";
-                        tableHtmlRows += "</ul></div></td></tr>";
-                    }
-                }
-
-                $("#tableTopClients").html(tableHtmlRows);
-            }
-
-            //top domains
-            {
-                var tableHtmlRows;
-                var topDomains = responseJSON.response.topDomains;
-
-                if (topDomains.length < 1) {
-                    tableHtmlRows = "<tr><td colspan=\"3\" align=\"center\">No Data</td></tr>";
-                }
-                else {
-                    tableHtmlRows = "";
-
-                    for (var i = 0; i < topDomains.length; i++) {
-                        if (topDomains[i].nameIdn == null)
-                            tableHtmlRows += "<tr><td style=\"word-wrap: anywhere;\">" + htmlEncode(topDomains[i].name == "" ? "." : topDomains[i].name) + "</td><td>" + topDomains[i].hits.toLocaleString();
-                        else
-                            tableHtmlRows += "<tr><td style=\"word-wrap: anywhere;\">" + htmlEncode(topDomains[i].nameIdn) + "</td><td>" + topDomains[i].hits.toLocaleString();
-
-                        tableHtmlRows += "</td><td align=\"right\"><div class=\"dropdown\"><a href=\"#\" id=\"btnDashboardTopDomainsRowOption" + i + "\" class=\"dropdown-toggle\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"true\"><span class=\"glyphicon glyphicon-option-vertical\" aria-hidden=\"true\"></span></a><ul class=\"dropdown-menu dropdown-menu-right\">";
-                        tableHtmlRows += "<li><a href=\"#\" data-id=\"" + i + "\" onclick=\"showQueryLogs('" + topDomains[i].name + "', null); return false;\">Show Query Logs</a></li>";
-                        tableHtmlRows += "<li><a href=\"#\" data-id=\"" + i + "\" onclick=\"queryDnsServer('" + topDomains[i].name + "'); return false;\">Query DNS Server</a></li>";
-                        tableHtmlRows += "<li><a href=\"#\" data-id=\"" + i + "\" data-domain=\"" + htmlEncode(topDomains[i].name) + "\" onclick=\"blockDomain(this, 'btnDashboardTopDomainsRowOption'); return false;\">Block Domain</a></li>";
-                        tableHtmlRows += "</ul></div></td></tr>";
-                    }
-                }
-
-                $("#tableTopDomains").html(tableHtmlRows);
-            }
-
-            //top blocked domains
-            {
-                var tableHtmlRows;
-                var topBlockedDomains = responseJSON.response.topBlockedDomains;
-
-                if (topBlockedDomains.length < 1) {
-                    tableHtmlRows = "<tr><td colspan=\"3\" align=\"center\">No Data</td></tr>";
-                }
-                else {
-                    tableHtmlRows = "";
-
-                    for (var i = 0; i < topBlockedDomains.length; i++) {
-                        if (topBlockedDomains[i].nameIdn == null)
-                            tableHtmlRows += "<tr><td style=\"word-wrap: anywhere;\">" + htmlEncode(topBlockedDomains[i].name == "" ? "." : topBlockedDomains[i].name) + "</td><td>" + topBlockedDomains[i].hits.toLocaleString();
-                        else
-                            tableHtmlRows += "<tr><td style=\"word-wrap: anywhere;\">" + htmlEncode(topBlockedDomains[i].nameIdn) + "</td><td>" + topBlockedDomains[i].hits.toLocaleString();
-
-                        tableHtmlRows += "</td><td align=\"right\"><div class=\"dropdown\"><a href=\"#\" id=\"btnDashboardTopBlockedDomainsRowOption" + i + "\" class=\"dropdown-toggle\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"true\"><span class=\"glyphicon glyphicon-option-vertical\" aria-hidden=\"true\"></span></a><ul class=\"dropdown-menu dropdown-menu-right\">";
-                        tableHtmlRows += "<li><a href=\"#\" data-id=\"" + i + "\" onclick=\"showQueryLogs('" + topBlockedDomains[i].name + "', null); return false;\">Show Query Logs</a></li>";
-                        tableHtmlRows += "<li><a href=\"#\" data-id=\"" + i + "\" onclick=\"queryDnsServer('" + topBlockedDomains[i].name + "'); return false;\">Query DNS Server</a></li>";
-                        tableHtmlRows += "<li><a href=\"#\" data-id=\"" + i + "\" data-domain=\"" + htmlEncode(topBlockedDomains[i].name) + "\" onclick=\"allowDomain(this, 'btnDashboardTopBlockedDomainsRowOption'); return false;\">Allow Domain</a></li>";
-                        tableHtmlRows += "</ul></div></td></tr>";
-                    }
-                }
-
-                $("#tableTopBlockedDomains").html(tableHtmlRows);
             }
 
             if (!hideLoader) {
@@ -2428,173 +2252,6 @@ function refreshDashboard(hideLoader) {
         },
         objLoaderPlaceholder: divDashboardLoader,
         dontHideAlert: hideLoader
-    });
-}
-
-function showTopStats(statsType, limit) {
-    var divTopStatsAlert = $("#divTopStatsAlert");
-    var divTopStatsLoader = $("#divTopStatsLoader");
-
-    $("#tableTopStatsClients").hide();
-    $("#tableTopStatsDomains").hide();
-    $("#tableTopStatsBlockedDomains").hide();
-    divTopStatsLoader.show();
-
-    switch (statsType) {
-        case "TopClients":
-            $("#lblTopStatsTitle").text("Top " + limit + " Clients");
-            break;
-
-        case "TopDomains":
-            $("#lblTopStatsTitle").text("Top " + limit + " Domains");
-            break;
-
-        case "TopBlockedDomains":
-            $("#lblTopStatsTitle").text("Top " + limit + " Blocked Domains");
-            break;
-    }
-
-    $("#modalTopStats").modal("show");
-
-    var type = $('input[name=rdStatType]:checked').val();
-    var custom = "";
-
-    if (type === "custom") {
-        var txtStart = $("#dpCustomDayWiseStart").val();
-        if (txtStart === null || (txtStart === "")) {
-            showAlert("warning", "Missing!", "Please select a start date.");
-            $("#dpCustomDayWiseStart").focus();
-            return;
-        }
-
-        var txtEnd = $("#dpCustomDayWiseEnd").val();
-        if (txtEnd === null || (txtEnd === "")) {
-            showAlert("warning", "Missing!", "Please select an end date.");
-            $("#dpCustomDayWiseEnd").focus();
-            return;
-        }
-
-        var start = moment(txtStart);
-        var end = moment(txtEnd);
-
-        if ((end.diff(start, "days") + 1) > 7) {
-            start = moment.utc(txtStart).toISOString();
-            end = moment.utc(txtEnd).toISOString();
-        }
-        else {
-            start = start.toISOString();
-            end = end.toISOString();
-        }
-
-        custom = "&start=" + encodeURIComponent(start) + "&end=" + encodeURIComponent(end);
-    }
-
-    HTTPRequest({
-        url: "api/dashboard/stats/getTop?token=" + sessionData.token + "&type=" + type + custom + "&statsType=" + statsType + "&limit=" + limit,
-        success: function (responseJSON) {
-            divTopStatsLoader.hide();
-
-            if (responseJSON.response.topClients != null) {
-                var tableHtmlRows;
-                var topClients = responseJSON.response.topClients;
-
-                if (topClients.length < 1) {
-                    tableHtmlRows = "<tr><td colspan=\"3\" align=\"center\">No Data</td></tr>";
-                }
-                else {
-                    tableHtmlRows = "";
-
-                    for (var i = 0; i < topClients.length; i++) {
-                        tableHtmlRows += "<tr" + (topClients[i].rateLimited ? " style=\"color: orange;\"" : "") + "><td style=\"word-wrap: anywhere;\">" + htmlEncode(topClients[i].name) + (topClients[i].rateLimited ? " (rate limited)" : "") + "<br />" + htmlEncode(topClients[i].domain == "" ? "." : topClients[i].domain) + "</td><td>" + topClients[i].hits.toLocaleString();
-                        tableHtmlRows += "</td><td align=\"right\"><div class=\"dropdown\"><a href=\"#\" id=\"btnDashboardTopClientsRowOption" + i + "\" class=\"dropdown-toggle\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"true\"><span class=\"glyphicon glyphicon-option-vertical\" aria-hidden=\"true\"></span></a><ul class=\"dropdown-menu dropdown-menu-right\">";
-                        tableHtmlRows += "<li><a href=\"#\" data-id=\"" + i + "\" onclick=\"showQueryLogs(null, '" + topClients[i].name + "'); return false;\">Show Query Logs</a></li>";
-                        tableHtmlRows += "</ul></div></td></tr>";
-                    }
-                }
-
-                $("#tbodyTopStatsClients").html(tableHtmlRows);
-
-                if (topClients.length > 0)
-                    $("#tfootTopStatsClients").html("Total Clients: " + topClients.length);
-                else
-                    $("#tfootTopStatsClients").html("");
-
-                $("#tableTopStatsClients").show();
-            }
-            else if (responseJSON.response.topDomains != null) {
-                var tableHtmlRows;
-                var topDomains = responseJSON.response.topDomains;
-
-                if (topDomains.length < 1) {
-                    tableHtmlRows = "<tr><td colspan=\"3\" align=\"center\">No Data</td></tr>";
-                }
-                else {
-                    tableHtmlRows = "";
-
-                    for (var i = 0; i < topDomains.length; i++) {
-                        if (topDomains[i].nameIdn == null)
-                            tableHtmlRows += "<tr><td style=\"word-wrap: anywhere;\">" + htmlEncode(topDomains[i].name == "" ? "." : topDomains[i].name) + "</td><td>" + topDomains[i].hits.toLocaleString();
-                        else
-                            tableHtmlRows += "<tr><td style=\"word-wrap: anywhere;\">" + htmlEncode(topDomains[i].nameIdn) + "</td><td>" + topDomains[i].hits.toLocaleString();
-
-                        tableHtmlRows += "</td><td align=\"right\"><div class=\"dropdown\"><a href=\"#\" id=\"btnDashboardTopStatsDomainsRowOption" + i + "\" class=\"dropdown-toggle\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"true\"><span class=\"glyphicon glyphicon-option-vertical\" aria-hidden=\"true\"></span></a><ul class=\"dropdown-menu dropdown-menu-right\">";
-                        tableHtmlRows += "<li><a href=\"#\" data-id=\"" + i + "\" onclick=\"showQueryLogs('" + topDomains[i].name + "', null); return false;\">Show Query Logs</a></li>";
-                        tableHtmlRows += "<li><a href=\"#\" data-id=\"" + i + "\" onclick=\"queryDnsServer('" + topDomains[i].name + "'); return false;\">Query DNS Server</a></li>";
-                        tableHtmlRows += "<li><a href=\"#\" data-id=\"" + i + "\" data-domain=\"" + htmlEncode(topDomains[i].name) + "\" onclick=\"blockDomain(this, 'btnDashboardTopStatsDomainsRowOption', 'divTopStatsAlert'); return false;\">Block Domain</a></li>";
-                        tableHtmlRows += "</ul></div></td></tr>";
-                    }
-                }
-
-                $("#tbodyTopStatsDomains").html(tableHtmlRows);
-
-                if (topDomains.length > 0)
-                    $("#tfootTopStatsDomains").html("Total Domains: " + topDomains.length);
-                else
-                    $("#tfootTopStatsDomains").html("");
-
-                $("#tableTopStatsDomains").show();
-            }
-            else if (responseJSON.response.topBlockedDomains != null) {
-                var tableHtmlRows;
-                var topBlockedDomains = responseJSON.response.topBlockedDomains;
-
-                if (topBlockedDomains.length < 1) {
-                    tableHtmlRows = "<tr><td colspan=\"3\" align=\"center\">No Data</td></tr>";
-                }
-                else {
-                    tableHtmlRows = "";
-
-                    for (var i = 0; i < topBlockedDomains.length; i++) {
-                        if (topBlockedDomains[i].nameIdn == null)
-                            tableHtmlRows += "<tr><td style=\"word-wrap: anywhere;\">" + htmlEncode(topBlockedDomains[i].name == "" ? "." : topBlockedDomains[i].name) + "</td><td>" + topBlockedDomains[i].hits.toLocaleString();
-                        else
-                            tableHtmlRows += "<tr><td style=\"word-wrap: anywhere;\">" + htmlEncode(topBlockedDomains[i].nameIdn) + "</td><td>" + topBlockedDomains[i].hits.toLocaleString();
-
-                        tableHtmlRows += "</td><td align=\"right\"><div class=\"dropdown\"><a href=\"#\" id=\"btnDashboardTopStatsBlockedDomainsRowOption" + i + "\" class=\"dropdown-toggle\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"true\"><span class=\"glyphicon glyphicon-option-vertical\" aria-hidden=\"true\"></span></a><ul class=\"dropdown-menu dropdown-menu-right\">";
-                        tableHtmlRows += "<li><a href=\"#\" data-id=\"" + i + "\" onclick=\"showQueryLogs('" + topBlockedDomains[i].name + "', null); return false;\">Show Query Logs</a></li>";
-                        tableHtmlRows += "<li><a href=\"#\" data-id=\"" + i + "\" onclick=\"queryDnsServer('" + topBlockedDomains[i].name + "'); return false;\">Query DNS Server</a></li>";
-                        tableHtmlRows += "<li><a href=\"#\" data-id=\"" + i + "\" data-domain=\"" + htmlEncode(topBlockedDomains[i].name) + "\" onclick=\"allowDomain(this, 'btnDashboardTopStatsBlockedDomainsRowOption', 'divTopStatsAlert'); return false;\">Allow Domain</a></li>";
-                        tableHtmlRows += "</ul></div></td></tr>";
-                    }
-                }
-
-                $("#tbodyTopStatsBlockedDomains").html(tableHtmlRows);
-
-                if (topBlockedDomains.length > 0)
-                    $("#tfootTopStatsBlockedDomains").html("Total Domains: " + topBlockedDomains.length);
-                else
-                    $("#tfootTopStatsBlockedDomains").html("");
-
-                $("#tableTopStatsBlockedDomains").show();
-            }
-
-            $("#divTopStatsData").animate({ scrollTop: 0 }, "fast");
-        },
-        invalidToken: function () {
-            showPageLogin();
-        },
-        objLoaderPlaceholder: divTopStatsLoader,
-        objAlertPlaceholder: divTopStatsAlert
     });
 }
 

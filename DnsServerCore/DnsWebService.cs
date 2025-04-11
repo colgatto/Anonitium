@@ -108,7 +108,7 @@ namespace DnsServerCore
         DateTime _dnsTlsCertificateLastModifiedOn;
 
         //cache
-        bool _saveCache = true;
+        bool _saveCache = false;
 
         Timer _tlsCertificateUpdateTimer;
         const int TLS_CERTIFICATE_UPDATE_TIMER_INITIAL_INTERVAL = 60000;
@@ -484,7 +484,6 @@ namespace DnsServerCore
 
             //dashboard
             _webService.MapGetAndPost("/api/dashboard/stats/get", _dashboardApi.GetStats);
-            _webService.MapGetAndPost("/api/dashboard/stats/getTop", _dashboardApi.GetTopStats);
             _webService.MapGetAndPost("/api/dashboard/stats/deleteAll", _logsApi.DeleteAllStats);
 
             //zones
@@ -522,11 +521,6 @@ namespace DnsServerCore
             _webService.MapGetAndPost("/api/zones/records/get", _zonesApi.GetRecords);
             _webService.MapGetAndPost("/api/zones/records/update", _zonesApi.UpdateRecord);
             _webService.MapGetAndPost("/api/zones/records/delete", _zonesApi.DeleteRecord);
-
-            //cache
-            _webService.MapGetAndPost("/api/cache/list", _otherZonesApi.ListCachedZones);
-            _webService.MapGetAndPost("/api/cache/delete", _otherZonesApi.DeleteCachedZone);
-            _webService.MapGetAndPost("/api/cache/flush", _otherZonesApi.FlushCache);
 
             //allowed
             _webService.MapGetAndPost("/api/allowed/list", _otherZonesApi.ListAllowedZones);
@@ -1735,9 +1729,12 @@ namespace DnsServerCore
 
                 //cache
                 if (version >= 30)
+				{
                     _saveCache = bR.ReadBoolean();
+					_saveCache = false;
+				}
                 else
-                    _saveCache = true;
+                    _saveCache = false;
 
                 _dnsServer.ServeStale = bR.ReadBoolean();
                 _dnsServer.CacheZoneManager.ServeStaleTtl = bR.ReadUInt32();
@@ -2920,22 +2917,6 @@ namespace DnsServerCore
                         _settingsApi.StartBlockListUpdateTimer(false);
                 }
 
-                //load dns cache async
-                if (_saveCache)
-                {
-                    ThreadPool.QueueUserWorkItem(delegate (object state)
-                    {
-                        try
-                        {
-                            _dnsServer.CacheZoneManager.LoadCacheZoneFile();
-                        }
-                        catch (Exception ex)
-                        {
-                            _log.Write("Failed to fully load DNS Cache from disk\r\n" + ex.ToString());
-                        }
-                    });
-                }
-
                 //start web service
                 await TryStartWebServiceAsync([IPAddress.Any, IPAddress.IPv6Any], 5380, 53443);
 
@@ -2977,18 +2958,6 @@ namespace DnsServerCore
                 StopTlsCertificateUpdateTimer();
 
                 await StopWebServiceAsync();
-
-                if (_saveCache)
-                {
-                    try
-                    {
-                        _dnsServer.CacheZoneManager.SaveCacheZoneFile();
-                    }
-                    catch (Exception ex)
-                    {
-                        _log.Write(ex);
-                    }
-                }
 
                 _log?.Write("DNS Server (v" + _currentVersion.ToString() + ") was stopped successfully.");
             }

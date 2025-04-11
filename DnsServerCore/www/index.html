@@ -24,7 +24,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <meta name="robots" content="noindex, nofollow" />
     <meta name="referrer" content="no-referrer" />
 
-    <title>Technitium DNS Server</title>
+    <title>Anonitium</title>
 
     <script src="js/jquery.min.js"></script>
 
@@ -120,7 +120,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             <ul class="nav nav-tabs" role="tablist">
                                 <li id="mainPanelTabListDashboard" role="presentation" class="active"><a href="#mainPanelTabPaneDashboard" aria-controls="mainPanelTabPaneDashboard" role="tab" data-toggle="tab" onclick="refreshDashboard();">Dashboard</a></li>
                                 <li id="mainPanelTabListZones" role="presentation"><a href="#mainPanelTabPaneZones" aria-controls="mainPanelTabPaneZones" role="tab" data-toggle="tab" onclick="refreshZones(true);">Zones</a></li>
-                                <li id="mainPanelTabListCachedZones" role="presentation"><a href="#mainPanelTabPaneCachedZones" aria-controls="mainPanelTabPaneCachedZones" role="tab" data-toggle="tab">Cache</a></li>
                                 <li id="mainPanelTabListAllowedZones" role="presentation"><a href="#mainPanelTabPaneAllowedZones" aria-controls="mainPanelTabPaneAllowedZones" role="tab" data-toggle="tab">Allowed</a></li>
                                 <li id="mainPanelTabListBlockedZones" role="presentation"><a href="#mainPanelTabPaneBlockedZones" aria-controls="mainPanelTabPaneBlockedZones" role="tab" data-toggle="tab">Blocked</a></li>
                                 <li id="mainPanelTabListApps" role="presentation"><a href="#mainPanelTabPaneApps" aria-controls="mainPanelTabPaneApps" role="tab" data-toggle="tab" onclick="refreshApps();">Apps</a></li>
@@ -172,67 +171,67 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                                     <div id="divDashboard" style="display: none;">
                                         <div class="stats-panel">
                                             <div class="stats-item total-queries">
-                                                <div class="number" id="divDashboardStatsTotalQueries">100</div>
+                                                <div class="number" id="divDashboardStatsTotalQueries">0</div>
                                                 <div class="percentage">100%</div>
                                                 <div class="title">Total Queries</div>
                                             </div>
 
                                             <div class="stats-item no-error">
-                                                <div class="number" id="divDashboardStatsTotalNoError">70</div>
+                                                <div class="number" id="divDashboardStatsTotalNoError">0</div>
                                                 <div class="percentage" id="divDashboardStatsTotalNoErrorPercentage">0%</div>
                                                 <div class="title">No Error</div>
                                             </div>
 
                                             <div class="stats-item server-failure">
-                                                <div class="number" id="divDashboardStatsTotalServerFailure">5</div>
+                                                <div class="number" id="divDashboardStatsTotalServerFailure">0</div>
                                                 <div class="percentage" id="divDashboardStatsTotalServerFailurePercentage">0%</div>
                                                 <div class="title">Server Failure</div>
                                             </div>
 
                                             <div class="stats-item nxdomain">
-                                                <div class="number" id="divDashboardStatsTotalNxDomain">5</div>
+                                                <div class="number" id="divDashboardStatsTotalNxDomain">0</div>
                                                 <div class="percentage" id="divDashboardStatsTotalNxDomainPercentage">0%</div>
                                                 <div class="title">NX Domain</div>
                                             </div>
 
                                             <div class="stats-item refused">
-                                                <div class="number" id="divDashboardStatsTotalRefused">10</div>
+                                                <div class="number" id="divDashboardStatsTotalRefused">0</div>
                                                 <div class="percentage" id="divDashboardStatsTotalRefusedPercentage">0%</div>
                                                 <div class="title">Refused</div>
                                             </div>
 
                                             <div class="stats-item auth-hit">
-                                                <div class="number" id="divDashboardStatsTotalAuthHit">10</div>
+                                                <div class="number" id="divDashboardStatsTotalAuthHit">0</div>
                                                 <div class="percentage" id="divDashboardStatsTotalAuthHitPercentage">0%</div>
                                                 <div class="title">Authoritative</div>
                                             </div>
 
                                             <div class="stats-item recursions">
-                                                <div class="number" id="divDashboardStatsTotalRecursions">10</div>
+                                                <div class="number" id="divDashboardStatsTotalRecursions">0</div>
                                                 <div class="percentage" id="divDashboardStatsTotalRecursionsPercentage">0%</div>
                                                 <div class="title">Recursive</div>
                                             </div>
 
                                             <div class="stats-item cache-hit">
-                                                <div class="number" id="divDashboardStatsTotalCacheHit">10</div>
+                                                <div class="number" id="divDashboardStatsTotalCacheHit">0</div>
                                                 <div class="percentage" id="divDashboardStatsTotalCacheHitPercentage">0%</div>
                                                 <div class="title">Cached</div>
                                             </div>
 
                                             <div class="stats-item blocked">
-                                                <div class="number" id="divDashboardStatsTotalBlocked">10</div>
+                                                <div class="number" id="divDashboardStatsTotalBlocked">0</div>
                                                 <div class="percentage" id="divDashboardStatsTotalBlockedPercentage">0%</div>
                                                 <div class="title">Blocked</div>
                                             </div>
 
                                             <div class="stats-item dropped">
-                                                <div class="number" id="divDashboardStatsTotalDropped">5</div>
+                                                <div class="number" id="divDashboardStatsTotalDropped">0</div>
                                                 <div class="percentage" id="divDashboardStatsTotalDroppedPercentage">0%</div>
                                                 <div class="title">Dropped</div>
                                             </div>
 
                                             <div class="stats-item stats-last-item clients">
-                                                <div class="number" id="divDashboardStatsTotalClients">10</div>
+                                                <div class="number" id="divDashboardStatsTotalClients">0</div>
                                                 <div class="percentage">&nbsp;</div>
                                                 <div class="title">Clients</div>
                                             </div>
@@ -243,131 +242,67 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                                         </div>
 
                                         <div style="margin-top: 15px;">
-                                            <div style="float: left; width: 50%; padding-right: 7px;">
-                                                <div class="panel panel-default" style="margin-bottom: 15px;">
-                                                    <div class="panel-body">
-                                                        <canvas id="canvasDashboardPie"></canvas>
-                                                    </div>
-                                                </div>
 
-                                                <div class="panel panel-default" style="margin-bottom: 15px;">
-                                                    <div class="panel-body">
-                                                        <canvas id="canvasDashboardPie2"></canvas>
-                                                    </div>
-                                                </div>
-
-                                                <div class="panel panel-default" style="margin-bottom: 0px;">
-                                                    <div class="panel-body">
-                                                        <canvas id="canvasDashboardPie3"></canvas>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div style="float: right; width: 50%; padding-left: 7px;">
+											<div style="width: 100%;">
                                                 <div class="zone-stats-panel">
                                                     <div class="stats-item">
-                                                        <div class="number" id="divDashboardStatsZones">10</div>
+                                                        <div class="number" id="divDashboardStatsZones">0</div>
                                                         <div class="title">Zones</div>
                                                     </div>
 
                                                     <div class="stats-item">
-                                                        <div class="number" id="divDashboardStatsCachedEntries">10</div>
+                                                        <div class="number" id="divDashboardStatsCachedEntries">0</div>
                                                         <div class="title">Cache</div>
                                                     </div>
 
                                                     <div class="stats-item">
-                                                        <div class="number" id="divDashboardStatsAllowedZones">10</div>
+                                                        <div class="number" id="divDashboardStatsAllowedZones">0</div>
                                                         <div class="title">Allowed</div>
                                                     </div>
 
                                                     <div class="stats-item">
-                                                        <div class="number" id="divDashboardStatsBlockedZones">10</div>
+                                                        <div class="number" id="divDashboardStatsBlockedZones">0</div>
                                                         <div class="title">Blocked</div>
                                                     </div>
 
                                                     <div class="stats-item">
-                                                        <div class="number" id="divDashboardStatsAllowListZones">10</div>
+                                                        <div class="number" id="divDashboardStatsAllowListZones">0</div>
                                                         <div class="title">Allow List</div>
                                                     </div>
 
                                                     <div class="stats-item stats-last-item">
-                                                        <div class="number" id="divDashboardStatsBlockListZones">10</div>
+                                                        <div class="number" id="divDashboardStatsBlockListZones">0</div>
                                                         <div class="title">Block List</div>
                                                     </div>
 
                                                     <div class="clearfix"></div>
                                                 </div>
-
-                                                <div class="panel panel-default" style="margin-bottom: 0px;">
-                                                    <div class="panel-heading" style="height: 41px; padding: 4px 6px;">
-                                                        <div class="pull-left" style="padding: 6px 8px;">Top Clients</div>
-                                                        <div class="pull-right">
-                                                            <button type="button" class="btn btn-default" data-loading-text="More" onclick="showTopStats('TopClients', 1000);" style="font-size: 12px; padding: 4px 14px; margin: 2px 0px;">More</button>
-                                                        </div>
-                                                        <div class="clearfix"></div>
-                                                    </div>
-                                                    <table class="table table-hover">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>Client</th>
-                                                                <th>Queries</th>
-                                                                <th style="width: 36px;"></th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody id="tableTopClients">
-                                                        </tbody>
-                                                    </table>
-                                                </div>
                                             </div>
 
-                                            <div style="clear: both;"></div>
-                                        </div>
-
-                                        <div style="margin-top: 15px;">
-                                            <div style="float: left; width: 50%; padding-right: 7px;">
-                                                <div class="panel panel-default" style="margin-bottom: 0px;">
-                                                    <div class="panel-heading" style="height: 41px; padding: 4px 6px;">
-                                                        <div class="pull-left" style="padding: 6px 8px;">Top Domains</div>
-                                                        <div class="pull-right">
-                                                            <button type="button" class="btn btn-default" data-loading-text="More" onclick="showTopStats('TopDomains', 1000);" style="font-size: 12px; padding: 4px 14px; margin: 2px 0px;">More</button>
-                                                        </div>
-                                                        <div class="clearfix"></div>
-                                                    </div>
-                                                    <table class="table table-hover">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>Domain</th>
-                                                                <th>Hits</th>
-                                                                <th style="width: 36px;"></th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody id="tableTopDomains">
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
-
-                                            <div style="float: right; width: 50%; padding-left: 7px;">
-                                                <div class="panel panel-default" style="margin-bottom: 0px;">
-                                                    <div class="panel-heading" style="height: 41px; padding: 4px 6px;">
-                                                        <div class="pull-left" style="padding: 6px 8px;">Top Blocked Domains</div>
-                                                        <div class="pull-right">
-                                                            <button type="button" class="btn btn-default" data-loading-text="More" onclick="showTopStats('TopBlockedDomains', 1000);" style="font-size: 12px; padding: 4px 14px; margin: 2px 0px;">More</button>
-                                                        </div>
-                                                        <div class="clearfix"></div>
-                                                    </div>
-                                                    <table class="table table-hover">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>Domain</th>
-                                                                <th>Hits</th>
-                                                                <th style="width: 36px;"></th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody id="tableTopBlockedDomains">
-                                                        </tbody>
-                                                    </table>
-                                                </div>
+                                            <div style="display: flex;">
+												<div style="width: 100%;">
+													<div class="panel panel-default">
+														<div class="panel-body" style="height: 300px;">
+															<canvas id="canvasDashboardPie"></canvas>
+														</div>
+													</div>
+												</div>
+											</div>
+                                            <div style="display: flex; justify-content: space-evenly;">
+												<div style="width: 47%;">
+													<div class="panel panel-default">
+														<div class="panel-body" style="height: 300px;">
+															<canvas id="canvasDashboardPie2"></canvas>
+														</div>
+													</div>
+												</div>
+												<div style="width: 47%;">
+													<div class="panel panel-default">
+														<div class="panel-body" style="height: 300px;">
+															<canvas id="canvasDashboardPie3"></canvas>
+														</div>
+													</div>
+												</div>
                                             </div>
 
                                             <div style="clear: both;"></div>
@@ -607,42 +542,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                                             </tfoot>
                                         </table>
                                     </div>
-                                </div>
-
-                                <div id="mainPanelTabPaneCachedZones" role="tabpanel" class="tab-pane" style="padding: 10px 0 0 0;">
-
-                                    <div class="well well-sm zone-list-pane">
-                                        <form class="form-inline">
-                                            <div class="form-group" style="width: 100%">
-                                                <input type="text" class="form-control" style="width: inherit;" id="txtCacheZone" placeholder="example.com">
-                                            </div>
-                                            <div class="form-group">
-                                                <button id="btnBrowseCacheZone" type="submit" class="btn btn-primary" data-loading-text="Browse" onclick="refreshCachedZonesList($('#txtCacheZone').val()); return false;">Browse</button>
-                                            </div>
-                                        </form>
-
-                                        <div id="lstCachedZones" class="zones">
-                                        </div>
-                                    </div>
-
-                                    <div id="divCachedZoneViewer" class="zone-viewer-pane">
-                                        <div class="panel panel-default">
-                                            <div class="panel-heading" style="height: 36px; padding: 4px 6px;">
-                                                <div id="txtCachedZoneViewerTitle" style="float: left; padding: 4px;">technitium.com</div>
-                                                <div style="float: right;">
-                                                    <button id="btnDeleteCachedZone" type="button" class="btn btn-warning" data-loading-text="Delete" onclick="deleteCachedZone();" style="font-size: 12px; padding: 4px 6px;">Delete</button>
-                                                    <button type="button" class="btn btn-danger" data-loading-text="Delete" onclick="flushDnsCache(this);" style="font-size: 12px; padding: 4px 6px;">Flush</button>
-                                                </div>
-                                            </div>
-
-                                            <div class="panel-body">
-                                                <pre id="preCachedZoneViewerBody">
-                                                    
-                                                </pre>
-                                            </div>
-                                        </div>
-                                    </div>
-
                                 </div>
 
                                 <div id="mainPanelTabPaneAllowedZones" role="tabpanel" class="tab-pane" style="padding: 10px 0 0 0;">
@@ -1699,22 +1598,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                                                 </div>
 
                                                 <div id="settingsTabPaneCache" role="tabpanel" class="tab-pane">
-                                                    <div class="well well-sm form-horizontal">
-                                                        <div class="form-group">
-                                                            <label class="col-sm-3 control-label">DNS Cache</label>
-                                                            <div class="col-sm-8">
-                                                                <div class="checkbox">
-                                                                    <label>
-                                                                        <input id="chkSaveCache" type="checkbox"> Save Cache To Disk
-                                                                    </label>
-                                                                </div>
-                                                                <div style="padding-top: 5px; padding-left: 20px;">Enable this option to save DNS cache on disk when the DNS server stops. The saved cache will be loaded next time the DNS server starts.</div>
-                                                            </div>
-                                                        </div>
-
-                                                        <div>Note! The DNS server will attempt to save cache to disk when it stops which may take time depending on the cache size. If the DNS server takes a lot of time to stop then it may lead to the OS killing the DNS server process causing an incomplete cache to be stored on disk.</div>
-                                                    </div>
-
                                                     <div class="well well-sm form-horizontal">
                                                         <div class="form-group">
                                                             <label class="col-sm-3 control-label">Serve Stale</label>
@@ -3165,16 +3048,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
                                     <div class="about" style="text-align: center;">
                                         <img src="img/logo.png" alt="Technitium Logo" />
-                                        <h1>Technitium DNS Server</h1>
+                                        <h1>Anonitium DNS Server</h1>
                                         <p>Version <span id="lblAboutVersion"></span></p>
                                         <p>Server up since <span id="lblAboutUptime"></span></p>
-                                        <p style="max-width: 800px; margin: 0 auto 10px auto;">
-                                            Copyright (C) 2025  Shreyas Zare (shreyas@technitium.com)<br />
-                                            This program comes with ABSOLUTELY NO WARRANTY. This is free software, and you are welcome to redistribute it under certain conditions.<br />
-                                        </p>
-                                        <p>Source code available under <a href="https://go.technitium.com/?id=24" target="_blank">GNU General Public License v3.0</a> on <a href="https://github.com/TechnitiumSoftware/DnsServer" target="_blank"><i class="fa fa-github"></i>&nbsp;GitHub</a></p>
+                                        <p>Source code available on <a href="https://github.com/colgatto/anonitium" target="_blank"><i class="fa fa-github"></i>&nbsp;GitHub</a></p>
 
-                                        <h3 style="margin-top: 40px;"><a style="color: rgb(51,51,51) !important;" href="https://go.technitium.com/?id=23" target="_blank">What's New?</a></h3>
+                                        <h3 style="margin-top: 40px;">Based on Technitium</h3>
+                                        <h3 style="margin-top: 30px;"><a style="color: rgb(51,51,51) !important;" href="https://go.technitium.com/?id=23" target="_blank">What's New?</a></h3>
                                         <p>Read the <a href="https://go.technitium.com/?id=23" target="_blank">change log</a> to know what's new in this release.</p>
 
                                         <h3 style="margin-top: 40px;"><a style="color: rgb(51,51,51) !important;" href="https://github.com/TechnitiumSoftware/DnsServer/blob/master/APIDOCS.md" target="_blank">API Documentation</a></h3>
@@ -3184,7 +3064,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                                         <p>Read the latest <a href="https://go.technitium.com/?id=25" target="_blank">online help topics</a> which contains the DNS Server user manual and covers frequently asked questions.</p>
 
                                         <h3 style="margin-top: 40px;">Support</h3>
-                                        <p>For support, send an email to <a href="mailto:support@technitium.com" target="_blank">support@technitium.com</a>.</p>
                                         <p>
                                             Follow <a href="https://mastodon.social/@technitium" target="_blank">@technitium@mastodon.social</a> on Mastodon.<br />
                                             Checkout <a href="https://blog.technitium.com/" target="_blank">Technitium Blog</a>.

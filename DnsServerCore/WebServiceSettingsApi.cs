@@ -385,7 +385,7 @@ namespace DnsServerCore
                 jsonWriter.WriteNumber("resolverMaxStackCount", _dnsWebService._dnsServer.ResolverMaxStackCount);
 
                 //cache
-                jsonWriter.WriteBoolean("saveCache", _dnsWebService._saveCache);
+                jsonWriter.WriteBoolean("saveCache", false);
                 jsonWriter.WriteBoolean("serveStale", _dnsWebService._dnsServer.ServeStale);
                 jsonWriter.WriteNumber("serveStaleTtl", _dnsWebService._dnsServer.CacheZoneManager.ServeStaleTtl);
                 jsonWriter.WriteNumber("serveStaleAnswerTtl", _dnsWebService._dnsServer.CacheZoneManager.ServeStaleAnswerTtl);
@@ -1099,15 +1099,6 @@ namespace DnsServerCore
                     #endregion
 
                     #region cache
-
-                    //cache
-                    if (request.TryGetQueryOrForm("saveCache", bool.Parse, out bool saveCache))
-                    {
-                        if (!saveCache)
-                            _dnsWebService._dnsServer.CacheZoneManager.DeleteCacheZoneFile();
-
-                        _dnsWebService._saveCache = saveCache;
-                    }
 
                     if (request.TryGetQueryOrForm("serveStale", bool.Parse, out bool serveStale))
                         _dnsWebService._dnsServer.ServeStale = serveStale;

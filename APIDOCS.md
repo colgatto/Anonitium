@@ -1555,7 +1555,6 @@ WHERE:
 - `type` (optional): The duration type for which valid values are: [`LastHour`, `LastDay`, `LastWeek`, `LastMonth`, `LastYear`, `custom`]. Default value is `LastHour`.
 - `start` (optional): The start date in ISO 8601 format. Applies only to `custom` type.
 - `end` (optional): The end date in ISO 8601 format. Applies only to `custom` type.
-- `statsType`: The stats type for which valid values are : [`TopClients`, `TopDomains`, `TopBlockedDomains`]
 - `limit` (optional): The limit of records to return. Default value is `1000`.
 - `noReverseLookup` (optional): Set to `true` to disable reverse lookup for Top Clients list. This option is only applicable with `TopClients` stats type.
 - `onlyRateLimitedClients` (optional): Set to `true` to list only clients which are being rate limited in the Top Clients list. This option is only applicable with `TopClients` stats type.

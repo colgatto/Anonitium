@@ -683,7 +683,7 @@ namespace DnsServerCore
             if (q is null)
                 requestInfo = "MISSING QUESTION!";
             else
-                requestInfo = "QNAME: " + q.Name + "; QTYPE: " + q.Type.ToString() + "; QCLASS: " + q.Class;
+                requestInfo = "QNAME: Hidden; QTYPE: " + q.Type.ToString() + "; QCLASS: " + q.Class;
 
             if (request.Additional.Count > 0)
             {
@@ -718,17 +718,7 @@ namespace DnsServerCore
                 }
                 else
                 {
-                    answer = "[";
-
-                    for (int i = 0; i < response.Answer.Count; i++)
-                    {
-                        if (i > 0)
-                            answer += ", ";
-
-                        answer += response.Answer[i].RDATA.ToString();
-                    }
-
-                    answer += "]";
+                    answer = "[Hidden]";
 
                     if (response.Additional.Count > 0)
                     {
@@ -737,25 +727,7 @@ namespace DnsServerCore
                             case DnsResourceRecordType.NS:
                             case DnsResourceRecordType.MX:
                             case DnsResourceRecordType.SRV:
-                                answer += "; ADDITIONAL: [";
-
-                                for (int i = 0; i < response.Additional.Count; i++)
-                                {
-                                    DnsResourceRecord additional = response.Additional[i];
-
-                                    switch (additional.Type)
-                                    {
-                                        case DnsResourceRecordType.A:
-                                        case DnsResourceRecordType.AAAA:
-                                            if (i > 0)
-                                                answer += ", ";
-
-                                            answer += additional.Name + " (" + additional.RDATA.ToString() + ")";
-                                            break;
-                                    }
-                                }
-
-                                answer += "]";
+                                answer += "; ADDITIONAL: [Hidden]";
                                 break;
                         }
                     }
@@ -763,7 +735,7 @@ namespace DnsServerCore
 
                 EDnsClientSubnetOptionData responseECS = response.GetEDnsClientSubnetOption();
                 if (responseECS is not null)
-                    answer += "; ECS: " + responseECS.Address.ToString() + "/" + responseECS.ScopePrefixLength;
+                    answer += "; ECS: Hidden";
 
                 responseInfo += "; ANSWER: " + answer;
             }
@@ -778,15 +750,7 @@ namespace DnsServerCore
 
         public void Write(IPEndPoint ep, string protocol, string message)
         {
-            string ipInfo;
-
-            if (ep == null)
-                ipInfo = "";
-            else if (ep.Address.IsIPv4MappedToIPv6)
-                ipInfo = "[" + ep.Address.MapToIPv4().ToString() + ":" + ep.Port + "] ";
-            else
-                ipInfo = "[" + ep.ToString() + "] ";
-
+            string ipInfo = "[Anon] ";
             Write(ipInfo + "[" + protocol.ToUpper() + "] " + message);
         }
 
